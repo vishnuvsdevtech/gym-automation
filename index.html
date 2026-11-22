@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Diary That Writes Itself — gym membership automation</title>
+<meta name="description" content="A working prototype of the gym membership automation: expiry tracking, WhatsApp reminders, payment status and a nightly owner report. Diary view on the left, automation on the right.">
+<meta name="theme-color" content="#0d1210">
+<link rel="canonical" href="https://vishnuvsdevtech.github.io/gym-automation/">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="brand"><span class="dot"></span><span class="mono">THE DIARY THAT WRITES ITSELF</span></div>
+  <div class="right">
+    <span class="meta mono" id="today">—</span>
+    <button class="icon" id="theme">◐</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <p class="eyebrow mono">prototype · gym membership automation</p>
+    <h1>120 members in a <em>diary</em>, and four things that run themselves</h1>
+    <p class="lede">A small gym loses money in exactly one way: renewals that nobody chased. This is
+    the working version of the ₹10–15k automation — new members recorded, reminders sent two days
+    before expiry, payments marked, and a nightly report to the owner. The left side is what the
+    owner sees; the right side is what runs without them.</p>
+    <div class="stats" id="stats"></div>
+  </section>
+
+  <div class="cols">
+    <!-- ---------------- left: the diary ---------------- -->
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Members</h2>
+        <div class="filters" id="filters"></div>
+      </div>
+      <div class="search-row">
+        <input id="q" placeholder="search name or phone…" autocomplete="off">
+        <button class="btn" id="addBtn">+ New member</button>
+      </div>
+      <div class="list" id="list"></div>
+    </section>
+
+    <!-- ---------------- right: the automation ---------------- -->
+    <aside class="panel side">
+      <div class="panel-head"><h2>What runs by itself</h2></div>
+
+      <div class="flow" id="flow"></div>
+
+      <div class="panel-head" style="margin-top:18px">
+        <h2>Owner's nightly report</h2>
+        <button class="btn ghost" id="runNightly">Run now</button>
+      </div>
+      <pre class="report mono" id="report">—</pre>
+
+      <div class="panel-head" style="margin-top:18px"><h2>Activity</h2></div>
+      <div class="activity" id="activity"><div class="empty">Nothing yet — try "New member" or mark a payment.</div></div>
+    </aside>
+  </div>
+
+  <section class="notes">
+    <h2>What this prototype is, honestly</h2>
+    <div class="grid3">
+      <div class="note-card">
+        <b>The logic is real</b>
+        <p>Expiry is computed from join date plus plan length. Reminders fire at exactly 2 days.
+        The nightly report sums balances and lists who expires this week. Change a member's date
+        and the whole thing reacts.</p>
+      </div>
+      <div class="note-card">
+        <b>WhatsApp is not</b>
+        <p>Messages are composed and logged, not sent. The official Business API needs Meta approval
+        and per-message pricing; unofficial libraries get numbers banned. That integration is the
+        actual work, and the real cost.</p>
+      </div>
+      <div class="note-card">
+        <b>No n8n required</b>
+        <p>The original reel sells an n8n workflow. Same result, less dependency: a cron job, a
+        database and an API call — which is also what <span class="mono">tools/reminders.py</span>
+        in this repo demonstrates.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot mono">
+  <span>Gym automation prototype</span>
+  <span>expiry · reminders · payments · nightly report</span>
+</footer>
+
+<script src="assets/store.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
